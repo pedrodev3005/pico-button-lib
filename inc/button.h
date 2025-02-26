@@ -1,6 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#define DEBOUNCE_TIME_MS 5  // Tempo de debounce para eventos de interrupção
+
 #include "pico/stdlib.h"
 
 // Define um tipo de callback para facilitar o uso
@@ -34,6 +36,6 @@ void button_wait_press(uint gpio);
 bool button_pressed_for(uint gpio, uint32_t duration_ms);
 
 //permite que qualquer função seja chamada quando o botão for pressionado.
-void button_register_callback(uint gpio, uint32_t event_mask, button_callback_t callback);
+void button_register_callback(uint gpio, uint32_t events, void (*callback)(uint, uint32_t));
 
 #endif // BUTTON_H

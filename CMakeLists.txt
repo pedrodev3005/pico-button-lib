@@ -42,7 +42,7 @@ pico_set_program_version(testagem_lib_botoes "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(testagem_lib_botoes 0)
-pico_enable_stdio_usb(testagem_lib_botoes 0)
+pico_enable_stdio_usb(testagem_lib_botoes 1)
 
 # Add the standard library to the build
 target_link_libraries(testagem_lib_botoes
