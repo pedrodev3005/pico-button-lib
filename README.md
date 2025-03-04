@@ -20,7 +20,7 @@ Uma biblioteca para **gerenciar botões** na **Raspberry Pi Pico**, permitindo l
 
 1️⃣ **Clone o repositório**:
    ```sh
-   git clone https://github.com/seu-usuario/pico-button-lib.git
+   git clone https://github.com/pedrodev3005/pico-button-lib.git
    cd pico-button-lib
    ```
 
