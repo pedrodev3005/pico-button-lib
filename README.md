@@ -2,7 +2,7 @@
 
 # 🔘 Biblioteca de Botões para Raspberry Pi Pico
 
-Uma biblioteca para **gerenciar botões** na **Raspberry Pi Pico**, permitindo leitura do estado, debounce, eventos assíncronos com interrupções e callbacks.
+Uma biblioteca para **gerenciar botões** na **Raspberry Pi Pico**, mais especificamente na bitdoglab, permitindo leitura do estado, debounce, eventos assíncronos com interrupções e callbacks.
 
 ---
 
@@ -16,25 +16,42 @@ Uma biblioteca para **gerenciar botões** na **Raspberry Pi Pico**, permitindo l
 
 ---
 
-## 📦 Instalação
+## 📂 Estrutura do Projeto
 
-1️⃣ **Clone o repositório**:
-   ```sh
-   git clone https://github.com/pedrodev3005/pico-button-lib.git
-   cd pico-button-lib
-   ```
+```
+📁 Código_fonte      # Biblioteca do buzzer
+│── 📁 inc          # Arquivos de cabeçalho
+│   ├── button.h
+│
+│── 📁 src          # Implementação da biblioteca
+│   ├── button.c
+│
+│── README.md       # Documentação do projeto
+│
+📁 exemplos          # Exemplos de uso da biblioteca (cada subpasta é um projeto independente)
+│── 📁 button_pressed_for            # Exemplo da função button_pressed_for()
+│── 📁 button_read                   # Exemplo da função button_read()
+│── 📁 button_register_callback      # Exemplo da função button_register_callback()
+│── 📁 button_toogle_on_press        # Exemplo da função button_toogle_on_press()
+│── 📁 button_wait_press             # Exemplo da função button_wait_press()
+```
+---
 
-2️⃣ **Adicione ao seu projeto**:  
-   No seu `CMakeLists.txt`, inclua:
-   ```cmake
-   add_subdirectory(pico-button-lib)
-   target_link_libraries(seu_projeto pico-button-lib)
-   ```
+## 🛠️ Como Rodar os Exemplos  
 
-3️⃣ **Inclua o cabeçalho no seu código**:
-   ```c
-   #include "button.h"
-   ```
+### 🔹 1️⃣ Instale a Extensão da Raspberry Pi no VS Code  
+Se ainda não tiver instalado, adicione a extensão **"Raspberry Pi Pico - C/C++ Project"** no **VS Code**.
+
+### 🔹 2️⃣ Importe o Exemplo Desejado  
+1. No VS Code, clique em **"Importar Projeto"**  
+2. Selecione a **pasta do exemplo** dentro de `exemplos/`  
+3. Compile e **grave na bitdoglab** 🚀  
+
+**Exemplo:**
+Se quiser testar a função `button_wait_press`, importe:  
+📂 `exemplos/button_wait_press`
+
+---
 
 ---
 
@@ -115,14 +132,13 @@ int main() {
 
 ## 🔧 Funções Disponíveis
 
-| Função                                   | Descrição |
-|------------------------------------------|-----------|
-| `button_init(pin, mode)`                 | Inicializa um botão no `pin` com `PULLUP` ou `PULLDOWN` |
+| Função                                    | Descrição |
+|------------------------------------------ |-----------|
+| `button_init(pin, mode)`                  | Inicializa um botão no `pin` com `PULLUP` ou `PULLDOWN` |
 | `button_read(pin)`                        | Retorna `true` se o botão estiver pressionado |
 | `button_toggle_on_press(pin, *state)`     | Alterna o estado booleano ao pressionar o botão |
 | `button_pressed_for(pin, ms)`             | Retorna `true` se o botão for pressionado por `ms` milissegundos |
 | `button_wait_press(pin)`                  | Bloqueia a execução até o botão ser pressionado |
-| `button_set_interrupt(pin, event_mask, callback)` | Ativa interrupções para um botão |
 | `button_register_callback(pin, events, callback)` | Registra um callback para eventos de botão (até dois botões suportados) |
 
 ---
@@ -133,11 +149,3 @@ Este projeto está sob a licença **MIT**, permitindo uso, modificação e distr
 
 ---
 
-### 🔥 O que foi ajustado no README?
-
-- **Adicionei o suporte fixo para dois botões (A e B)** na explicação da função `button_register_callback`.  
-- **Corrigi detalhes do debounce e interrupções**, para ficar coerente com a implementação da `button_callback_internal`.  
-- **Expliquei que o debounce é embutido** para evitar acionamentos fantasmas.  
-- **Melhorei a explicação das funções e exemplos**, para deixar tudo mais claro e direto.  
-
-Se quiser mudar algo ou adicionar detalhes, só avisar! 🚀🔘
