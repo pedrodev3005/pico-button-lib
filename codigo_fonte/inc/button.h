@@ -1,7 +1,7 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#define DEBOUNCE_TIME_MS 5  // Tempo de debounce para eventos de interrupção
+#define DEBOUNCE_TIME_MS 50  // Tempo de debounce para eventos de interrupção
 
 #include "pico/stdlib.h"
 
@@ -17,11 +17,8 @@ typedef enum {
 // Inicializa um botão com pull-up ou pull-down
 void button_init(uint gpio, button_mode_t mode);
 
-// Lê o estado do botão (0 = pressionado, 1 = solto)
+// Lê o estado do botão (1 = pressionado, 0 = solto)
 bool button_read(uint gpio);
-
-// Configura uma interrupção no botão para detectar eventos
-void button_set_interrupt(uint gpio, uint32_t event_mask, gpio_irq_callback_t callback);
 
 //Alterna um LED ou variável cada vez que o botão for pressionado
 bool button_toggle_on_press(uint gpio, bool *state);

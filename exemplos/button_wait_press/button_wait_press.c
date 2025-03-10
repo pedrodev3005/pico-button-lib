@@ -1,4 +1,4 @@
-5 Testando button_wait_press()
+//5 Testando button_wait_press()
 
 #include <stdio.h>
 #include "pico/stdlib.h"
@@ -9,6 +9,7 @@
 
 int main() {
     stdio_init_all();
+    sleep_ms(2000);
     button_init(BOTAO_A, PULLUP);
 
     gpio_init(LED_BLUE);

@@ -1,4 +1,4 @@
- 1. Teste de button_read()
+//1. Teste de button_read()
 
 #include <stdio.h>
 #include "pico/stdlib.h"
@@ -8,16 +8,15 @@
 
 int main() {
     stdio_init_all();
+    sleep_ms(2000);
     button_init(BOTAO, PULLUP);
 
     printf("Testando button_read()\n");
 
     while (true) {
         bool estado = button_read(BOTAO);
-        if (!estado)
-        {
-            printf("Estado do botão: %d\n", estado);
-        } 
+        printf("Estado do botão: %d\n", estado);
+
     }
 
     return 0;

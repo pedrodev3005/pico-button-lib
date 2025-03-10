@@ -28,35 +28,35 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(testagem_lib_botoes C CXX ASM)
+project(button_read C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(testagem_lib_botoes testagem_lib_botoes.c button.c )
+add_executable(button_read button_read.c button.c )
 
-pico_set_program_name(testagem_lib_botoes "testagem_lib_botoes")
-pico_set_program_version(testagem_lib_botoes "0.1")
+pico_set_program_name(button_read "button_read")
+pico_set_program_version(button_read "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(testagem_lib_botoes 0)
-pico_enable_stdio_usb(testagem_lib_botoes 1)
+pico_enable_stdio_uart(button_read 0)
+pico_enable_stdio_usb(button_read 1)
 
 # Add the standard library to the build
-target_link_libraries(testagem_lib_botoes
+target_link_libraries(button_read
         pico_stdlib)
 
 # Add the standard include files to the build
-target_include_directories(testagem_lib_botoes PRIVATE
+target_include_directories(button_read PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(testagem_lib_botoes 
+target_link_libraries(button_read 
         
         )
 
-pico_add_extra_outputs(testagem_lib_botoes)
+pico_add_extra_outputs(button_read)
 

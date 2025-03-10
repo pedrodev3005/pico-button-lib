@@ -1,4 +1,4 @@
-4. Teste de button_register_callback()
+//4. Teste de button_register_callback()
 
 #include <stdio.h>
 #include "pico/stdlib.h"
@@ -11,9 +11,9 @@
 
 void meu_callback(uint gpio, uint32_t events) {
     bool estado = button_read(gpio);
-    if (gpio == BOTAO_A) gpio_put(LED_BLUE, !estado);
-    if (gpio == BOTAO_B) gpio_put(LED_RED, !estado);
-    printf("Botão %d: %s\n", gpio, estado ? "Solto" : "Pressionado");
+    if (gpio == BOTAO_A) gpio_put(LED_BLUE, estado);
+    if (gpio == BOTAO_B) gpio_put(LED_RED, estado);
+    printf("Botão %d: %s\n", gpio, estado ? "pressionado" : "solto");
 }
 
 int main() {
