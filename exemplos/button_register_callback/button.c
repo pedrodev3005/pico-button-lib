@@ -65,32 +65,41 @@ bool button_pressed_for(uint gpio, uint32_t duration_ms) {
     return false;
 }
 
-// **Função de Callback com debounce para interrupções**
 void button_callback_internal(uint gpio, uint32_t events) {
     static uint32_t last_state_time_A = 0, last_state_time_B = 0;
     static bool last_state_A = true, last_state_B = true;
-    
+
     bool estado_atual = !button_read(gpio);
     uint32_t now = to_ms_since_boot(get_absolute_time());
-    
-    // **Debounce para BOTAO A**
+
+    // **BOTÃO A**
     if (gpio == botao_A) {
         if (estado_atual != last_state_A) {
             if (now - last_state_time_A > DEBOUNCE_TIME_MS) {
                 last_state_A = estado_atual;
                 last_state_time_A = now;
-                callback_A(gpio, events);  // Chama o callback apenas quando o estado muda
+                if ((events & GPIO_IRQ_EDGE_FALL) && !estado_atual) {
+                    callback_A(gpio, GPIO_IRQ_EDGE_FALL);
+                }
+                if ((events & GPIO_IRQ_EDGE_RISE) && estado_atual) {
+                    callback_A(gpio, GPIO_IRQ_EDGE_RISE);
+                }
             }
         }
     }
 
-    // **Debounce para BOTAO B**
+    // **BOTÃO B**
     if (gpio == botao_B) {
         if (estado_atual != last_state_B) {
             if (now - last_state_time_B > DEBOUNCE_TIME_MS) {
                 last_state_B = estado_atual;
                 last_state_time_B = now;
-                callback_B(gpio, events);  // Chama o callback apenas quando o estado muda
+                if ((events & GPIO_IRQ_EDGE_FALL) && !estado_atual) {
+                    callback_B(gpio, GPIO_IRQ_EDGE_FALL);
+                }
+                if ((events & GPIO_IRQ_EDGE_RISE) && estado_atual) {
+                    callback_B(gpio, GPIO_IRQ_EDGE_RISE);
+                }
             }
         }
     }
@@ -99,13 +108,14 @@ void button_callback_internal(uint gpio, uint32_t events) {
 
 // **Função para registrar um callback com debounce embutido**
 void button_register_callback(uint gpio, uint32_t events, void (*callback)(uint, uint32_t)) {
-    if (botao_A == 0) {  // Caso seja o primeiro botão registrado
+    if (botao_A == 0) {  
         botao_A = gpio;
         callback_A = callback;
-    } else if (botao_B == 0) {  // Caso seja o segundo botão registrado
+    } else if (botao_B == 0) {  
         botao_B = gpio;
         callback_B = callback;
     }
-    // Habilita a interrupção com a função interna de callback
-    gpio_set_irq_enabled_with_callback(gpio, events, true, &button_callback_internal);
+
+    // **Registrar sempre ambos os eventos (EDGE_FALL e EDGE_RISE)**
+    gpio_set_irq_enabled_with_callback(gpio, GPIO_IRQ_EDGE_FALL | GPIO_IRQ_EDGE_RISE, true, &button_callback_internal);
 }
